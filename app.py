@@ -5,8 +5,15 @@ from datetime import datetime
 app = Flask(__name__)
 CORS(app)
 
-notes = []
-current_note = {"message": "I love you ❤️", "updated": False}
+notes = [
+    {
+        "message": "hey baby i love you so much",
+        "date": "Sunday, 10 May 2026",
+        "time": "00:00"
+    }
+]
+
+current_note = {"message": "hey baby i love you so much", "updated": False}
 
 @app.route("/")
 def index():
