@@ -219,11 +219,36 @@
     }
 
     .cal-day.has-note {
-      background: rgba(200,0,50,0.3);
-      border: 1px solid rgba(255,100,100,0.5);
-      color: #fff5f5;
+      background: rgba(200,0,50,0.75);
+      border: 1px solid rgba(255,100,100,0.8);
+      color: #ffffff;
       cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 0 18px rgba(200,0,50,0.7);
       animation: glow 2s ease-in-out infinite alternate;
+      position: relative;
+      flex-direction: column;
+      gap: 1px;
+      font-size: 0.75rem;
+    }
+
+    .cal-day.has-note::after {
+      content: '♥';
+      font-size: 0.45rem;
+      color: rgba(255,200,200,0.9);
+      line-height: 1;
+    }
+
+    .cal-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.2);
+      cursor: default;
+      transition: all 0.2s;
     }
 
     @keyframes glow {
@@ -236,8 +261,8 @@
     }
 
     .cal-day.today {
-      border: 1px solid rgba(255,150,150,0.3);
-      color: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,150,150,0.5);
+      color: rgba(255,255,255,0.8);
     }
 
     .cal-day.empty { cursor: default; }
