@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Send a note 💌</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1a0a0a;
+      font-family: 'Lato', sans-serif;
+      color: white;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,100,100,0.2);
+      border-radius: 20px;
+      padding: 40px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,150,150,0.7);
+      margin-bottom: 30px;
+    }
+
+    textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,100,100,0.3);
+      border-radius: 10px;
+      padding: 15px;
+      color: white;
+      font-family: 'Lato', sans-serif;
+      font-size: 1rem;
+      resize: none;
+      height: 140px;
+      outline: none;
+    }
+
+    textarea::placeholder { color: rgba(255,255,255,0.2); }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 14px;
+      background: rgba(200,0,50,0.6);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover { background: rgba(200,0,50,0.9); }
+
+    .status {
+      margin-top: 15px;
+      font-size: 0.8rem;
+      color: rgba(255,150,150,0.6);
+      min-height: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+  <h1>💌 Send a note</h1>
+  <textarea id="msg" placeholder="Write something lovely..."></textarea>
+  <button onclick="send()">Send ❤️</button>
+  <div class="status" id="status"></div>
+</div>
+
+<script>
+  const API = 'https://lovenote-ndq2.onrender.com';
+
+  async function send() {
+    const msg = document.getElementById('msg').value.trim();
+    if (!msg) return;
+
+    document.getElementById('status').textContent = 'Sending...';
+
+    try {
+      const res = await fetch(API + '/note', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msg })
+      });
+
+      if (res.ok) {
+        document.getElementById('status').textContent = '✨ Note sent!';
+        document.getElementById('msg').value = '';
+      }
+    } catch(e) {
+      document.getElementById('status').textContent = 'Something went wrong, try again.';
+    }
+  }
+</script>
+</body>
+</html>
