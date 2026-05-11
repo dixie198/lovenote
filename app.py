@@ -8,7 +8,7 @@ CORS(app)
 notes = [
     {
         "message": "hey baby i love you so much",
-        "date": "Sunday, 10 May 2026",
+        "date": "Saturday, 10 May 2026",
         "time": "00:00"
     }
 ]
