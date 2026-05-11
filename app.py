@@ -9,7 +9,7 @@ notes = [
     {
         "message": "hey baby i love you so much",
         "date": "Saturday, 10 May 2026",
-        "time": "00:00"
+        "time": "01:00"
     }
 ]
 
@@ -39,7 +39,7 @@ def set_note():
     current_note["updated"] = True
     notes.append({
         "message": msg,
-        "date": datetime.now().strftime("%A, %d %B %Y"),
+        "date": datetime.now().strftime("%A, %-d %B %Y"),
         "time": datetime.now().strftime("%H:%M")
     })
     return jsonify({"status": "ok"})
