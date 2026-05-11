@@ -1,11 +1,12 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-import os
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
 
-note = {"message": "I love you ❤️", "updated": False}
+notes = []
+current_note = {"message": "I love you ❤️", "updated": False}
 
 @app.route("/")
 def index():
@@ -21,18 +22,28 @@ def send_page():
 
 @app.route("/note", methods=["GET"])
 def get_note():
-    return jsonify(note)
+    return jsonify(current_note)
 
 @app.route("/note", methods=["POST"])
 def set_note():
     data = request.get_json()
-    note["message"] = data["message"]
-    note["updated"] = True
+    msg = data["message"]
+    current_note["message"] = msg
+    current_note["updated"] = True
+    notes.append({
+        "message": msg,
+        "date": datetime.now().strftime("%A, %d %B %Y"),
+        "time": datetime.now().strftime("%H:%M")
+    })
     return jsonify({"status": "ok"})
+
+@app.route("/history", methods=["GET"])
+def history():
+    return jsonify(list(reversed(notes)))
 
 @app.route("/ack", methods=["POST"])
 def ack():
-    note["updated"] = False
+    current_note["updated"] = False
     return jsonify({"status": "ok"})
 
 if __name__ == "__main__":
