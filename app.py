@@ -8,7 +8,7 @@ CORS(app)
 notes = [
     {
         "message": "hey baby i love you so much",
-        "date": "Saturday, 10 May 2026",
+        "date": "Sunday, 10 May 2026",
         "time": "01:00"
     }
 ]
@@ -42,10 +42,13 @@ def set_note():
         "date": datetime.now().strftime("%A, %-d %B %Y"),
         "time": datetime.now().strftime("%H:%M")
     })
+
+    print(notes[-1]["date"])
     return jsonify({"status": "ok"})
 
 @app.route("/history", methods=["GET"])
 def history():
+    print("fetch")
     return jsonify(list(reversed(notes)))
 
 @app.route("/ack", methods=["POST"])

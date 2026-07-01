@@ -355,7 +355,7 @@
     starsEl.appendChild(s);
   }
 
-  const API = 'https://lovenote-ndq2.onrender.com';
+  const API = 'http://127.0.0.1:5000';
   let lastMessage = '';
   let allNotes = [];
   let currentMonth = new Date().getMonth();
@@ -396,7 +396,10 @@
     try {
       const res = await fetch(API + '/history');
       allNotes = await res.json();
-    } catch(e) { allNotes = []; }
+    } catch(e) {
+      console.log("FAILED TO FETCH") 
+      allNotes = []; 
+    }
 
     currentMonth = new Date().getMonth();
     currentYear = new Date().getFullYear();
@@ -426,6 +429,8 @@
     allNotes.forEach(n => {
       if (!noteMap[n.date]) noteMap[n.date] = [];
       noteMap[n.date].push(n);
+      console.log(noteMap[n.date])
+      console.log(n.date)
     });
 
     const grid = document.getElementById('cal-grid');
@@ -458,17 +463,21 @@
 
       const dateObj = new Date(currentYear, currentMonth, d);
       const dateStr = dateObj.toLocaleDateString('en-GB', {
-        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+        weekday: 'long'}) + ", " + dateObj.toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'
       });
+      console.log(dateStr)
 
       if (d === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
         dayEl.classList.add('today');
       }
 
       if (noteMap[dateStr]) {
+        console.log("Note loaded")
         dayEl.classList.add('has-note');
         const notes = noteMap[dateStr];
         dayEl.onclick = () => showNotePopup(dateStr, notes);
+        console.log("NOTEEE")
+        console.log(dateStr)
       }
 
       grid.appendChild(dayEl);
