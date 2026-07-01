@@ -35,12 +35,13 @@ def get_note():
 def set_note():
     data = request.get_json()
     msg = data["message"]
+    now = datetime.now()
     current_note["message"] = msg
     current_note["updated"] = True
     notes.append({
         "message": msg,
-        "date": datetime.now().strftime("%A, %-d %B %Y"),
-        "time": datetime.now().strftime("%H:%M")
+        "date": f"{now.strftime('%A')}, {now.day} {now.strftime('%B %Y')}",
+        "time": now.strftime("%H:%M")
     })
 
     print(notes[-1]["date"])
